@@ -6,4 +6,3 @@ Listen to a pseudorandom number generator: a project to simplify [Listen to Wiki
 It is based on  [Listen to Wikipedia](https://github.com/hatnote/listen-to-wikipedia "Listen to Wikipedia") and as a consecuence on [Listen to BitListen](https://github.com/MaxLaumeister/bitlisten "BitListen"), so it has very similar dependencies:
 
 - Howler.js by James Simpson
-- Reconnecting-Websocket by Joe Walnes (to be dropped)
