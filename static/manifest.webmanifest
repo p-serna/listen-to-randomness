@@ -1,0 +1,16 @@
+{
+  "name": "Listen to Randomness",
+  "short_name": "Randomness",
+  "start_url": ".",
+  "display":"standalone",
+  "background_color": "#1c2733",
+  "description": "An app to listen to randomness",
+  "icons":[
+    {"src":"images/icon.png",
+      "size":"512x498",
+     "type":"image/png"},
+     {"src":"images/icon.png",
+       "size":"512x498",
+      "type":"image/png"}
+  ]
+}
