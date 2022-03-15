@@ -61,55 +61,6 @@ var body_background_color = '#f8f8f8',
     sound_totals = 51,
     total_edits = 0;
 
-/* Languages
-   ========= */
-
-var langs = {
-    'en': ['English', 'ws://wikimon.hatnote.com:9000'],
-    'de': ['German', 'ws://wikimon.hatnote.com:9010'],
-    'ru': ['Russian', 'ws://wikimon.hatnote.com:9020'],
-    'uk': ['Ukrainian', 'ws://wikimon.hatnote.com:9310'],
-    'ja': ['Japanese', 'ws://wikimon.hatnote.com:9030'],
-    'es': ['Spanish', 'ws://wikimon.hatnote.com:9040'],
-    'fr': ['French', 'ws://wikimon.hatnote.com:9050'],
-    'nl': ['Dutch', 'ws://wikimon.hatnote.com:9060'],
-    'it': ['Italian', 'ws://wikimon.hatnote.com:9070'],
-    'sv': ['Swedish', 'ws://wikimon.hatnote.com:9080'],
-    'ar': ['Arabic', 'ws://wikimon.hatnote.com:9090'],
-    'fa': ['Farsi', 'ws://wikimon.hatnote.com:9210'],
-    'he': ['Hebrew' , 'ws://wikimon.hatnote.com:9230'],
-    'id': ['Indonesian', 'ws://wikimon.hatnote.com:9100'],
-    'zh': ['Chinese', 'ws://wikimon.hatnote.com:9240'],
-    'as': ['Assamese', 'ws://wikimon.hatnote.com:9150'],
-    'hi': ['Hindi', 'ws://wikimon.hatnote.com:9140'],
-    'bn': ['Bengali', 'ws://wikimon.hatnote.com:9160'],
-    'pa': ['Punjabi', 'ws://wikimon.hatnote.com:9120'],
-    'te': ['Telugu', 'ws://wikimon.hatnote.com:9165'],
-    'ta': ['Tamil', 'ws://wikimon.hatnote.com:9110'],
-    'ml': ['Malayalam', 'ws://wikimon.hatnote.com:9250'],
-    'mr': ['Western Mari', 'ws://wikimon.hatnote.com:9130'],
-    'kn': ['Kannada', 'ws://wikimon.hatnote.com:9170'],
-    'or': ['Oriya', 'ws://wikimon.hatnote.com:9180'],
-    'sa': ['Sanskrit', 'ws://wikimon.hatnote.com:9190'],
-    'gu': ['Gujarati' , 'ws://wikimon.hatnote.com:9200'],
-    'pl': ['Polish' , 'ws://wikimon.hatnote.com:9260'],
-    'mk': ['Macedonian' , 'ws://wikimon.hatnote.com:9270'],
-    'be': ['Belarusian' , 'ws://wikimon.hatnote.com:9280'],
-    'sr': ['Serbian' , 'ws://wikimon.hatnote.com:9290'],
-    'bg': ['Bulgarian' , 'ws://wikimon.hatnote.com:9300'],
-    'hu': ['Hungarian', 'ws://wikimon.hatnote.com:9320'],
-    'fi': ['Finnish', 'ws://wikimon.hatnote.com:9330'],
-    'no': ['Norwegian', 'ws://wikimon.hatnote.com:9340'],
-    'el': ['Greek', 'ws://wikimon.hatnote.com:9350'],
-    'eo': ['Esperanto', 'ws://wikimon.hatnote.com:9360'],
-'pt': ['Portuguese', 'ws://wikimon.hatnote.com:9370'],
-'et': ['Estonian', 'ws://wikimon.hatnote.com:9380'],
-    'wikidata': ['Wikidata' , 'ws://wikimon.hatnote.com:9220']
-}
-
-/*
-   ============== */
-
 var w = window,
     d = document,
     e = d.documentElement,
@@ -128,11 +79,6 @@ var celesta = [],
     s_welcome = true,
     s_langs = [];
 
-var user_announcements = false;
-setTimeout(function() {
-    user_announcements = true;
-}, 20000);
-
 $(function(){
 
     // Chrome 66 Autoplay Policy Compliance
@@ -149,7 +95,6 @@ $(function(){
     $('body').css('color', body_text_color)
     $('svg').css('background-color', svg_background_color)
     $('svg text').css('color', svg_text_color)
-    // :(
     $('head').append('<style type="text/css">.newuser-label {fill:' + svg_text_color +
                      ';} .bot {fill:' + bot_color +
                      ';} .anon {fill:' + anon_color +
@@ -160,37 +105,7 @@ $(function(){
         .attr({width: width, height: height})
         .style('background-color', '#1c2733');
 
-    var update_window = function() {
-        width = w.innerWidth || e.clientWidth || g.clientWidth;
-        height = (w.innerHeight  - $('#header').height())|| (e.clientHeight - $('#header').height()) || (g.clientHeight - $('#header').height());
 
-        svg.attr("width", width).attr("height", height);
-        if (epm_text) {
-            epm_container.attr('transform', 'translate(0, ' + (height - 25) + ')')
-        }
-        update_tag_warning();
-        /*rate_bg.attr("width", width).attr("height", height);*/
-    }
-
-    window.onresize = update_window;
-
-    $('#welcome').click(make_click_handler($('#welcome'), 'nowelcomes')
-    );
-    $('#titles').click(
-        make_click_handler($('#titles'), 'notitles')
-    );
-    $('#background_mode').click(
-        function() {$("#area svg").toggle();}
-    );
-    $('#hide_rc_box').click(
-        function() {$("#rc-log").toggle();}
-    );
-
-    $('#about-link').click(function(){
-        // because we use window.location to set languages.
-        $('html, body').animate({scrollTop:$(document).height()}, 'slow');
-        return false;
-    });
 
     // TODO: Volume slider?
     var loaded_sounds = 0
@@ -236,62 +151,5 @@ $(function(){
         }))
     }
 
-    /*
-    function testuser() {
-        data = {user: 'Slaporte'}
-        newuser_action(data, 'en', svg)
-    }
-
-    testuser()
-    */
-
-    for (lang in langs) {
-        if (langs.hasOwnProperty(lang)) {
-            if (lang == 'wikidata') {
-                $('#lang-boxes').append('<p><input type="checkbox" name="' + langs[lang][0] + '" id="' + lang + '-enable"/><label for="' + lang + '-enable">' + langs[lang][0] + ' <span class="conStatus" id="' + lang + '-status"></span></label></p>')
-            } else {
-                $('#lang-boxes').append('<p><input type="checkbox" name="' + langs[lang][0] + '" id="' + lang + '-enable"/><label for="' + lang + '-enable">' + langs[lang][0] + ' Wikipedia <span class="conStatus" id="' + lang + '-status"></span></label></p>')
-            }
-            SOCKETS[lang] = new wikipediaSocket.init(langs[lang][1], lang, svg);
-            var box = $('#' + lang + '-enable');
-            if (box.is(':checked')) {
-                enable(lang)
-            }
-            box.click(make_click_handler(box, lang));
-        }
-    }
-
-    enabled_langs = return_lang_settings();
-
-    if (!enabled_langs.length) {
-        enabled_langs.push(DEFAULT_LANG)
-    }
-    for (var i = 0; i < enabled_langs.length + 1; i ++) {
-        var lang = enabled_langs[i];
-        $('#' + lang + '-enable').prop('checked', true);
-        if (SOCKETS[lang] && (!SOCKETS[lang].connection ||
-                              SOCKETS[lang].connection.readyState == 3)) {
-            SOCKETS[lang].connect();
-        }
-    }
-  $('#filter').tagsInput({
-    height: '45px',
-    width: '80%',
-    'delimiter': [' ', ','],
-    defaultText: 'Add a tag',
-    defaultTextWidth: 100,
-    unique: false,
-    onChange: function() {
-      TAG_FILTERS = [];
-      $('.tag span').each(function(val) {
-          var tag = $(this).text().trim().replace('#', '').toLowerCase();
-          if($.inArray(tag, TAG_FILTERS) === -1){
-            TAG_FILTERS.push(tag);
-          }
-      });
-      update_tag_warning(svg);
-      console.log('Watching for: ' + TAG_FILTERS)
-    }
-  });
 
 })
