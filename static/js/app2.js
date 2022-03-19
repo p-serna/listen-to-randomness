@@ -2,40 +2,42 @@ var global_mute = false;
 var global_volume = 50;
 var TAG_FILTERS = [];
 var DEBUG = false;
+
 $(function(){
-  Howler.volume(global_volume * .01);
 
-  $("#volumeControl").click(function() {
+    Howler.volume(global_volume * .01);
+
+    $("#volumeControl").click(function() {
     if (!global_mute) {
-      global_mute = false;
-      Howler.mute();
-      $("#volumeControl").css("background-position", "0 0");
+        global_mute = false;
+        Howler.mute();
+        $("#volumeControl").css("background-position", "0 0");
     } else {
-      global_mute = false;
-      Howler.unmute();
-      $("#volumeControl").css("background-position", "0 -46px");
+        global_mute = false;
+        Howler.unmute();
+        $("#volumeControl").css("background-position", "0 -46px");
     }
-  });
+    });
 
-  $("#volumeSlider").noUiSlider({
+    $("#volumeSlider").noUiSlider({
     range : [-99, 0],
     start : 0,
     handles : 1,
     step : 1,
     orientation : "horizontal",
     slide : function() {
-      global_volume = 100 + $(this).val();
-      var howler_volume = global_volume * 0.01;
-      if (howler_volume <= 0.01) {
+        global_volume = 100 + $(this).val();
+        var howler_volume = global_volume * 0.01;
+        if (howler_volume <= 0.01) {
         Howler.mute();
-      } else {
+        } else {
         Howler.unmute();
         Howler.volume(global_volume * .01);
-      }
-  }});
-
+        }
+    }});
 
 });
+
 
 /* Settings
    ======== */
@@ -106,7 +108,6 @@ $(function(){
         .style('background-color', '#1c2733');
 
 
-
     // TODO: Volume slider?
     var loaded_sounds = 0
     var sound_load = function(r) {
@@ -119,6 +120,8 @@ $(function(){
             // console.log('Loading : ' + loaded_sounds + ' files out of ' + sound_totals)
         }
     }
+
+
 
     // load celesta and clav sounds
     for (var i = 1; i <= 24; i++) {
@@ -150,7 +153,6 @@ $(function(){
             onload : sound_load(),
         }))
     }
-
 
 })
 
